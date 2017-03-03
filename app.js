@@ -28,7 +28,9 @@ function addItem(userinput){
 function addItem(state, item){
 	state.items.push({item:item, checked:false});
 }
-
+function removeItem(state, item) {
+  state.items.splice(item, 1);
+}
 /*
 function checkItem() {
 	add checked state. true / false.
@@ -53,19 +55,16 @@ function renderDOM(){
   let htmlString = ``;
   $('.shopping-list').empty();
   for (let i=0; i<state.items.length; i++){
-    $('.shopping-list').append(`<li class="item-${i}"><span class="shopping-item">${state.items[i].item}</span></span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`);
+    $('.shopping-list').append(`<li class="js-item-${i}"><span class="shopping-item">${state.items[i].item}</span></span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete" id="js-item-${i}"><span class="button-label">delete</span></button></div></li>`);
   }
   checkItemInDom();
 }
 function checkItemInDom(){
   for (let i=0; i<state.items.length; i++){
     if(state.items[i].checked){
-      $(`.item-${i} .shopping-item`).addClass('shopping-item__checked');
+      $(`.js-item-${i} .shopping-item`).addClass('shopping-item__checked');
     }
   }
-}
-function removeItem(state, itemID){
-
 }
 
 
@@ -87,4 +86,14 @@ $(document).ready(function(){
   	console.log(state.items);
   	//$('#shopping-list-entry').reset();
   });
+
+  // api.jquery.com/on
+  // choose a parent (that will not disappear) and bind handlers using it
+  $('.shopping-item-delete').click(function(){
+      let clickedItemNumber = parseInt((this.id).slice(8));
+      removeItem(state, clickedItemNumber);
+      // console.log(clickedItemNumber);
+      console.log(state);
+      renderDOM();
+    });
 });
