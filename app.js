@@ -26,7 +26,7 @@ function addItem(userinput){
 }*/
 
 function addItem(state, item){
-
+	state.items.push({item:item, checked:false});
 }
 
 /*
@@ -51,6 +51,7 @@ founction renderDOM(){
 */
 function renderDOM(){
   let htmlString = ``;
+  $('.shopping-list').empty();
   for (let i=0; i<state.items.length; i++){
     $('.shopping-list').append(`<li class="item-${i}"><span class="shopping-item">${state.items[i].item}</span></span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`);
   }
@@ -68,7 +69,6 @@ function removeItem(state, itemID){
 }
 
 
-
 //4- HANDLE EVENTS
 /*
 	load the List
@@ -79,4 +79,12 @@ function removeItem(state, itemID){
 */
 $(document).ready(function(){
   renderDOM();
+  $('form').submit(function(event){
+  	event.preventDefault();
+  	let userInput = $('#shopping-list-entry').val();
+  	addItem(state, userInput);
+  	renderDOM();
+  	console.log(state.items);
+  	//$('#shopping-list-entry').reset();
+  });
 });
