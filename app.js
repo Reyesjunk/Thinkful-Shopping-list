@@ -12,16 +12,24 @@
 // Add apples, oranges, milk, and bread as default values
 var state = {
   items: [
-
+    {item:'apples', checked:false},
+    {item:'oranges', checked:false},
+    {item:'milk', checked:true},
+    {item:'bread', checked:false},
   ]
-}
+};
 /*2- CREATE modfication functions  CRUD
 
 function addItem(userinput){
-	
+
 	add item. set default check state to false.
+}*/
+
+function addItem(state, item){
+
 }
 
+/*
 function checkItem() {
 	add checked state. true / false.
 }
@@ -29,23 +37,34 @@ function removeItem(){
 	remove item from state
 }
 */
-function addItem(state, item){
 
-}
 /*
 //3- CREATE RENDER FUNCTIONS
 founction renderDOM(){
 	render current state of list to the DOM
 }
-	function renderDOM(){}
+	function renderDOM(){}  populate inside $('.shopping-list')
 	function addfromDOM{}
 	function deletefromDOM(){}
 	function checkiteminDOM(){}
 
 */
-
+function renderDOM(){
+  let htmlString = ``;
+  for (let i=0; i<state.items.length; i++){
+    $('.shopping-list').append(`<li class="item-${i}"><span class="shopping-item">${state.items[i].item}</span></span><div class="shopping-item-controls"><button class="shopping-item-toggle"><span class="button-label">check</span></button><button class="shopping-item-delete"><span class="button-label">delete</span></button></div></li>`);
+  }
+  checkItemInDom();
+}
+function checkItemInDom(){
+  for (let i=0; i<state.items.length; i++){
+    if(state.items[i].checked){
+      $(`.item-${i} .shopping-item`).addClass('shopping-item__checked');
+    }
+  }
+}
 function removeItem(state, itemID){
- 
+
 }
 
 
@@ -55,9 +74,9 @@ function removeItem(state, itemID){
 	load the List
 	listen for add item Click
 	listen for delete item Click
-    toggle item checked 
+    toggle item checked
 
 */
 $(document).ready(function(){
-
+  renderDOM();
 });
