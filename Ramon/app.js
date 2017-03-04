@@ -89,11 +89,14 @@ $(document).ready(function(){
 
   // api.jquery.com/on
   // choose a parent (that will not disappear) and bind handlers using it
-  $('.shopping-item-delete').click(function(){
+  $('.shopping-list').on('click', '.shopping-item-delete', (function(){
       let clickedItemNumber = parseInt((this.id).slice(8));
       removeItem(state, clickedItemNumber);
       // console.log(clickedItemNumber);
       console.log(state);
       renderDOM();
-    });
+    }));
+  $('.shopping-list').on('click', '.shopping-item-toggle', function(){
+    $(this).parent().siblings().toggleClass('shopping-item__checked');
+  });
 });
