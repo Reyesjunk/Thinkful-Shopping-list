@@ -66,28 +66,18 @@ function checkItemInDom(){
     }
   }
 }
-
-
-//4- HANDLE EVENTS
-/*
-	load the List
-	listen for add item Click
-	listen for delete item Click
-    toggle item checked
-
-*/
-$(document).ready(function(){
-  renderDOM();
+function submitItem(){
   $('form').submit(function(event){
-  	event.preventDefault();
-  	let userInput = $('#shopping-list-entry').val();
-  	addItem(state, userInput);
-  	renderDOM();
-  	console.log(state.items);
-  	//$('#shopping-list-entry').reset();
+    event.preventDefault();
+    let userInput = $('#shopping-list-entry').val();
+    addItem(state, userInput);
+    renderDOM();
+    console.log(state.items);
+    //$('#shopping-list-entry').reset();
   });
-
-  // api.jquery.com/on
+}
+function deleteButton(){
+    // api.jquery.com/on
   // choose a parent (that will not disappear) and bind handlers using it
   $('.shopping-list').on('click', '.shopping-item-delete', (function(){
       let clickedItemNumber = parseInt((this.id).slice(8));
@@ -96,7 +86,19 @@ $(document).ready(function(){
       console.log(state);
       renderDOM();
     }));
-  $('.shopping-list').on('click', '.shopping-item-toggle', function(){
+}
+
+function toggleCheck(){
+    $('.shopping-list').on('click', '.shopping-item-toggle', function(){
     $(this).parent().siblings().toggleClass('shopping-item__checked');
   });
+}
+
+
+$(document).ready(function(){
+  renderDOM();
+  submitItem();
+  deleteButton();
+  toggleCheck();
+
 });
